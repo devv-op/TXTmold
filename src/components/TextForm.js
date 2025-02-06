@@ -38,12 +38,12 @@ export default function TextForm(props) {
 
   return (
     <>
-      <div className="conatainer">
+      <div className="container">
         <h1 style={{ color: props.mode === "primary" ? "#212529" : "white" }}>
           {props.heading}
         </h1>
         <textarea
-          className="form-control"
+          className={`form-control ${props.mode === "primary" ? "light-placeholder" : "dark-placeholder"}`}
           placeholder="Enter the text here..."
           id="myBox"
           value={text}

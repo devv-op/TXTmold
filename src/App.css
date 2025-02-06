@@ -1,0 +1,13 @@
+.custom-textarea::placeholder {
+    color: white; /* Set placeholder color to white */
+    opacity: 1; /* Ensure full visibility */
+  }
+
+  .light-placeholder::placeholder {
+    color: gray;
+  }
+  
+  .dark-placeholder::placeholder {
+    color: white;
+  }
+  
