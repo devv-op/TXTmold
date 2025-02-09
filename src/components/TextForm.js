@@ -17,6 +17,7 @@ export default function TextForm(props) {
   };
 
   const HandleOnChange = (event) => {
+    setHistory([...history, text]);
     setText(event.target.value);
   };
 
@@ -30,11 +31,26 @@ export default function TextForm(props) {
 
   const HandleExtraSpaces = () => {
     let newText = text.split(/[ ]+/);
+    setText(newText.join(" "));
+    props.showAlert("Extra Space Removed.", "success");
+  };
+
+  const RemoveSpaces = () => {
+    let newText = text.split(/[ ]+/);
     setText(newText.join(""));
     props.showAlert("Space Removed.", "success");
   };
 
+  const HandleUndo = () => {
+    if (history.length > 0) {
+      setText(history[history.length - 1]);
+      setHistory(history.slice(0, -1));
+      props.showAlert("Undo","success");
+    }
+  };
+
   const [text, setText] = useState("");
+  const [history, setHistory] = useState([]);
 
   return (
     <>
@@ -67,7 +83,13 @@ export default function TextForm(props) {
           Copy Text
         </button>
         <button className="btn btn-primary mx-2" onClick={HandleExtraSpaces}>
+          Remove Extra Space
+        </button>
+        <button className="btn btn-primary mx-2" onClick={RemoveSpaces}>
           Remove Space
+        </button>
+        <button className="btn btn-primary mx-2" onClick={HandleUndo}>
+          Undo
         </button>
       </div>
       <div className="container">
@@ -77,7 +99,7 @@ export default function TextForm(props) {
         <p style={{ color: props.mode === "primary" ? "#212529" : "white" }}>
           Words:{" "}
           {text.trim().length === 0 ? 0 : text.trim().split(/\s+/).length} and
-          Characters: {text.length}
+          Characters: {text.replace(/\s/g, "").length}
         </p>
         <p style={{ color: props.mode === "primary" ? "#212529" : "white" }}>
           {0.008 * text.split(" ").length} minutes read
